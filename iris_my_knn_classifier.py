@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Sep 23 01:21:09 2019
-
-@author: User
-"""
 from scipy.spatial import distance
 
 def euc(a,b):

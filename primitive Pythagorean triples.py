@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Sep 27 14:49:41 2019
-
-@author: User
-"""
-
-
 def GCD(n): 
     """Greatest common divisor"""
     a = n[0]

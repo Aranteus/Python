@@ -1,10 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Редактор Spyder
-
-Это временный скриптовый файл.
-"""
-low = int(input("low: "))
+﻿low = int(input("low: "))
 high = int(input("high: "))
 
 def binary_search(low, high):

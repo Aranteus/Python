@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Sep 22 17:35:04 2019
-
-@author: User
-"""
 import numpy as np
 from sklearn.datasets import load_iris
 from sklearn import tree
