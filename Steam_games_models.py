@@ -1,15 +1,33 @@
 import pandas as pd
 from sklearn.ensemble import BaggingRegressor
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_predict
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Ridge
+import warnings
+
 
 def train_model(X, y):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
     dtr = DecisionTreeRegressor(max_depth=5)
-    model = BaggingRegressor(base_estimator=dtr, n_estimators=100, random_state=42).fit(X_train, y_train).predict(X_test)
-    print(model.score)
+    models = [dtr, BaggingRegressor(base_estimator=dtr, random_state=42), Ridge(), LinearRegression()]
+    for model in models:
+        print(model)
+        pred = cross_val_predict(model, X, y, cv=10)
+        print("Mean predict:")
+        print(pred.mean())
+        for score in ["r2", "neg_mean_squared_error", "neg_root_mean_squared_error"]:
+            print(score + ":")
+            scores = cross_val_score(model, X, y, scoring=score, cv=10)
+            print(scores.mean())
+            print()
+        #boxplot по pred
+        #boxplot по scores
+
+
 
 def main():
+    warnings.filterwarnings("ignore")
     data = pd.read_csv("final.csv")
     print(data)
     d1 = pd.get_dummies(data["genres__001"])
@@ -28,6 +46,11 @@ def main():
     data = data.drop(columns=["genres__001", "genres__002", "genres__003", "genres__004", "genres__005", "genres__006"])
     full_data = pd.concat([data, full_dummy], axis=1)
 
+    X = full_data.copy()
+    X = X.drop(columns= ['recommendations', 'name'])
+    y = pd.DataFrame(full_data[['recommendations']])
+
+    train_model(X, y)
 
     while True:
         pass
